@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{/fragments/head :: headfrag}"></head>
+<body class="bootstrap-dark">
+	<div align="center">
+		<header>
+			<h2>Fake Payment Gateway</h2>
+		</header>
+
+		<section>
+			<div th:unless="${idOrder}">
+				<div>No order requested to bill.</div>
+			</div>
+			<form th:if="${idOrder}" method="POST"
+				th:action="@{/ActionResultPayment}">
+				<div>
+					Username: <span th:text="${username}"></span>
+				</div>
+				<div>
+					Price: <span th:text="${price}"></span>
+				</div>
+				<input type="text" name="idUser" required hidden=""
+					th:value="${idUser}">
+				<input type="text" name="idOrder" required hidden=""
+					th:value="${idOrder}"> <input class="btn btn-warning mb-3"
+					type="submit" name="Random" value="Random" /> <input
+					class="btn btn-success mb-3" type="submit" name="Buy" value="Buy" />
+				<input class="btn btn-danger mb-3" type="submit" name="Reject"
+					value="Reject" />
+			</form>
+		</section>
+
+	</div>
+	<footer th:insert="~{/fragments/footer :: footer}">Static
+		footer</footer>
+</body>
+</html>

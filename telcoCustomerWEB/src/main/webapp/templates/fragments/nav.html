@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+	<nav th:fragment="navfrag"
+		class="navbar navbar-expand-lg navbar-dark bg-primary">
+		<div class="container-fluid">
+
+
+
+			<!-- Toggle button -->
+			<button class="navbar-toggler" type="button"
+				data-mdb-toggle="collapse" data-mdb-target="#navbarSupportedContent"
+				aria-controls="navbarSupportedContent" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<i class="fas fa-bars"></i>
+			</button>
+
+			<!-- Collapsible wrapper -->
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<!-- Navbar brand -->
+				<a class="navbar-brand mt-2 mt-lg-0" href="GoToHomePage">Telco</a>
+				<!-- Left links -->
+				<th:block th:if="${session.user}">
+					<ul th:if="${session.user.role == 1}"
+						class="navbar-nav me-auto mb-2 mb-lg-0">
+						<li class="nav-item"><a class="nav-link" href="GoToEmpCreate">Create</a></li>
+						<li class="nav-item"><a class="nav-link"
+							href="GoToEmpReports">Reports</a></li>
+					</ul>
+				</th:block>
+				<!-- Left links -->
+			</div>
+			<!-- Collapsible wrapper -->
+			<!-- Right elements -->
+			<div class="d-flex align-items-center">
+
+				<!-- IF GUEST -->
+				<a th:unless="${session.user}" role="button" href="GoToSignPage"
+					class="btn btn-outline active" aria-pressed="true"> <i
+					class="fa-solid fa-circle-user "></i> Signin or Signup
+				</a>
+				<!-- ELSE -->
+				<div th:if="${session.user}" class="dropdown">
+
+					<a role="button" href="GoToSignPage"
+						class="btn btn-outline active dropdown-toggle d-flex align-items-center hidden-arrow"
+						aria-pressed="true" data-mdb-toggle="dropdown"
+						aria-expanded="false"> <i
+						class="fa-solid fa-circle-user"></i> <span
+						th:text="${session.user.username}">username</span>
+					</a>
+					<ul class="dropdown-menu dropdown-menu-end"
+						aria-labelledby="navbarDropdownMenuAvatar">
+						<li><a class="dropdown-item" href="GoToSchedulePage">My schedules</a></li>
+						<li><a class="dropdown-item" href="ActionSignOut">Sign
+								out</a></li>
+					</ul>
+				</div>
+			</div>
+			<!-- Right elements -->
+		</div>
+	</nav>
+</body>
+</html>

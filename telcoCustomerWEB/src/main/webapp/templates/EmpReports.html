@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{/fragments/head :: headfrag}"></head>
+
+<body class="bootstrap-dark">
+	<header th:insert="~{/fragments/nav :: navfrag}">Static nav</header>
+	<section th:insert="~{/fragments/msg :: msgfrag}">msg</section>
+	<th:block th:if="${session.user}">
+		<div th:if="${session.user.role == 1}"
+			class="container-fluid bd-cheatsheet" align="center">
+			<section id="report134">
+				<h2 class=" fw-bold pt-3 pt-xl-5 pb-2 pb-xl-3">report134</h2>
+				<article class="my-3">
+					<div class="bd-heading  align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
+						<h3>Packages</h3>
+					</div>
+					<div>
+						<div class="bd-example" th:if="${report134}">
+							<table th:unless="${#lists.isEmpty(report134)}"
+								class="sortable table-fit table-striped table">
+								<tr>
+									<th>ID</th>
+									<th>Name</th>
+									<th>Units sold</th>
+									<th>with optionals</th>
+									<th>no optionals</th>
+									<th>average optionals</th>
+								</tr>
+								<tr th:each="r : ${report134}">
+									<td th:text="${r.tblPackage.PK_Packages}">ID</td>
+									<td th:text="${r.tblPackage.name}">Pacco</td>
+									<td th:text="${r.nSold}">100</td>
+									<td th:text="${r.priceWithOpt}">900</td>
+									<td th:text="${r.priceNoOpt}">200</td>
+									<td th:text="${r.nAvgOpt}">4</td>
+								</tr>
+							</table>
+							<div th:if="${#lists.isEmpty(report134)}" th:text="None"></div>
+						</div>
+					</div>
+				</article>
+			</section>
+			<section id="report2">
+				<h2 class=" fw-bold pt-3 pt-xl-5 pb-2 pb-xl-3">report2</h2>
+				<article class="my-3">
+					<div class="bd-heading  align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
+						<h3>Packages per periods</h3>
+					</div>
+					<div>
+						<div class="bd-example" th:if="${report2}">
+							<table th:unless="${#lists.isEmpty(report2)}"
+								class="sortable table-fit table-striped table">
+								<tr>
+									<th>ID package</th>
+									<th>ID period</th>
+									<th>Package</th>
+									<th>Period</th>
+									<th>unit sold</th>
+								</tr>
+								<tr th:each="r : ${report2}">
+									<td th:text="${r.tblPackage.PK_Packages}">ID</td>
+									<td th:text="${r.tblPeriod.PK_Periods}">100</td>
+									<td th:text="${r.tblPackage.name}">Pacco</td>
+									<td
+										th:text="${r.tblPeriod.months} + ' months ' + ${r.tblPeriod.fee}+' &#36;/month'">12
+										months at 10 &#36;/month</td>
+									<td th:text="${r.nSold}">100</td>
+								</tr>
+							</table>
+							<div th:if="${#lists.isEmpty(report2)}" th:text="None"></div>
+						</div>
+					</div>
+				</article>
+			</section>
+			<section id="report5">
+				<h2 class=" fw-bold pt-3 pt-xl-5 pb-2 pb-xl-3">report5</h2>
+
+				<article class="my-3">
+					<div class="bd-heading  align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
+						<h3>Insolvent users</h3>
+					</div>
+					<div>
+						<div class="bd-example" th:if="${insolventUsers}">
+							<table th:unless="${#lists.isEmpty(insolventUsers)}"
+								class="sortable table-fit table-striped table">
+								<tr>
+									<th>ID</th>
+									<th>username</th>
+									<th>insolvent</th>
+								</tr>
+								<tr th:each="r : ${insolventUsers}">
+									<td th:text="${r.PK_Users}">ID</td>
+									<td th:text="${r.username}">ID</td>
+									<td th:text="${r.isInsolvent}">Pacco</td>
+								</tr>
+							</table>
+							<div th:if="${#lists.isEmpty(insolventUsers)}" th:text="None">
+							</div>
+						</div>
+					</div>
+				</article>
+
+				<article class="my-3">
+					<div class="bd-heading  align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
+						<h3>Rejected orders</h3>
+					</div>
+					<div>
+						<div class="bd-example" th:if="${rejectedOrders}">
+							<table th:unless="${#lists.isEmpty(rejectedOrders)}"
+								class="sortable table-fit table-striped table">
+								<tr>
+									<th>IDorder</th>
+									<th>username</th>
+									<th>price</th>
+									<th>creation</th>
+								</tr>
+								<tr th:each="r : ${rejectedOrders}">
+									<td th:text="${r.PK_Orders}">ID</td>
+									<td th:text="${r.tblUser.username}">username</td>
+									<td th:text="${r.price}">5000</td>
+									<td th:text="${r.creationDate}">12/09</td>
+								</tr>
+							</table>
+							<div th:if="${#lists.isEmpty(rejectedOrders)}" th:text="None">
+							</div>
+						</div>
+					</div>
+				</article>
+
+				<article class="my-3">
+					<div class="bd-heading  align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
+						<h3>Alerts</h3>
+					</div>
+					<div>
+						<div class="bd-example" th:if="${alerts}">
+							<table th:unless="${#lists.isEmpty(alerts)}"
+								class="sortable table-fit table-striped table">
+								<tr>
+									<th>IDalert</th>
+									<th>username</th>
+									<th>email</th>
+									<th>amount</th>
+									<th>last rejected</th>
+								</tr>
+								<tr th:each="r : ${alerts}">
+									<td th:text="${r.PK_Alerts}">ID</td>
+									<td th:text="${r.username}">Pippo</td>
+									<td th:text="${r.email}">e@a</td>
+									<td th:text="${r.amount}">100</td>
+									<td th:text="${r.lastReject}">last rejected</td>
+								</tr>
+							</table>
+							<div th:if="${#lists.isEmpty(alerts)}" th:text="None"></div>
+						</div>
+					</div>
+				</article>
+			</section>
+			<section id="report6">
+				<h2 class=" fw-bold pt-3 pt-xl-5 pb-2 pb-xl-3">report6</h2>
+
+				<article class="my-3">
+					<div class="bd-heading  align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
+						<h3>Best optional</h3>
+
+					</div>
+					<div>
+						<div class="bd-example" th:if="${bestOpt}">
+							<table th:unless="${#lists.isEmpty(bestOpt)}"
+								class="sortable table-fit table-striped table">
+								<tr>
+									<th>ID optional</th>
+									<th>name</th>
+									<th>amount</th>
+								</tr>
+								<tr th:each="r : ${bestOpt}">
+									<td th:text="${r.tblOptional.PK_Optionals}">ID</td>
+									<td th:text="${r.tblOptional.name}">Pippo</td>
+									<td th:text="${r.score}">100</td>
+								</tr>
+							</table>
+							<div th:if="${#lists.isEmpty(bestOpt)}" th:text="None"></div>
+						</div>
+					</div>
+				</article>
+			</section>
+		</div>
+
+	</th:block>
+	<footer th:insert="~{/fragments/footer :: footer}">Static
+		footer</footer>
+</body>
+</html>

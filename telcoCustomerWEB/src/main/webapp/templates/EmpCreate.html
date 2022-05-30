@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{/fragments/head :: headfrag}"></head>
+<body class="bootstrap-dark">
+	<header th:insert="~{/fragments/nav :: navfrag}">Static nav</header>
+	<section th:insert="~{/fragments/msg :: msgfrag}">msg</section>
+	<div align="center">
+		<section>
+			<h2>Create a package</h2>
+			<form method="POST" action="ActionAddEmpPackage">
+				<label>Name <input type="text" name="name" required
+					class="form-input" aria-label="example">
+				</label> <label th:unless="${#lists.isEmpty(services)}">Services <select
+					name="services" multiple required class="form-select"
+					aria-label="multiple select example">
+						<option th:each="s : ${services}" th:value="${s.PK_Services} ">
+							<th:block th:text="${s.type}"></th:block>  
+							<th:block th:if="${s.sms>0}"> 
+								<th:block th:text="${s.sms}"></th:block> sms 
+								<th:block th:text="${s.feesms}"></th:block> &#36;/sms
+							</th:block>
+							<th:block th:if="${s.min>0}"> 
+								<th:block th:text="${s.min}"></th:block> min
+								<th:block th:text="${s.feemin}"></th:block> &#36;/min
+							</th:block>
+							<th:block th:if="${s.gb>0}"> 
+								<th:block th:text="${s.gb}"></th:block> gb
+								<th:block th:text="${s.feegb}"></th:block> &#36;/gb
+							</th:block>
+						</option>
+				</select>
+				</label> <label th:unless="${#lists.isEmpty(periods)}">Period<select
+					name="periods" multiple required class="form-select"
+					aria-label="multiple select example">
+						<option th:each="p : ${periods}" th:value="${p.PK_Periods}"
+							th:text="${p.months} + ' at '+${p.fee}+' &#36;/month'">Period</option>
+				</select>
+				</label> <label th:unless="${#lists.isEmpty(optionals)}">Optionals<select
+					name="optionals" multiple class="form-select"
+					aria-label="multiple select example">
+						<option th:each="o : ${optionals}" th:value="${o.PK_Optionals} "
+							th:text="${o.name}+' at '+${o.fee}+' &#36;/month'">1
+							month at 4&#36;/month</option>
+				</select>
+				</label> <input type="submit" value="Create">
+			</form>
+		</section>
+		<section>
+			<h2>Create an optional</h2>
+			<form method="POST" action="ActionAddEmpOptional">
+				<label>Name: <input type="text" name="name" required></label>
+				<label>Fee: <input type="text" name="fee" required></label>
+				<input type="submit" value="Create">
+			</form>
+		</section>
+	</div>
+	<footer th:insert="~{/fragments/footer :: footer}">Static
+		footer</footer>
+</body>
+</html>

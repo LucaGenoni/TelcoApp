@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{/fragments/head :: headfrag}"></head>
+<body class="bootstrap-dark">
+	<header th:insert="~{/fragments/nav :: navfrag}">Static nav</header>
+	<section th:insert="~{/fragments/msg :: msgfrag}">msg</section>
+	<div align="center">
+		<section>
+			<!-- IF NO PACKAGE SELECTED -->
+			<div th:unless="${package}">
+				<div>No packages selected</div>
+			</div>
+			<!-- ELSE -->
+			<form th:if="${package}" action="ActionAddSubscription" method="POST">
+				<input type="text" th:value="${package.PK_Packages}" name="IDpackage"
+					hidden="required" required> <label>Package <input
+					type="text" th:value="${package.name}" name="packageName" required
+					disabled>
+				</label> <label>Start date <input type="date" name="startDate" th:value="${#dates.format(startDay, 'yyyy-MM-dd')}"
+					required autocompleted>
+				</label> <label>Period <select name="IDperiod" required>
+						<option th:each="v : ${package.tblPeriods}" th:value="${v.PK_Periods}"
+							th:text="${v.months}+' months at '+${v.fee}+' &#36;/month'">-
+							month at -&#36;/month</option>
+				</select>
+				</label> <label>Optionals <select name="IDoptionals" multiple>
+						<option th:each="o : ${package.tblOptionals}" th:value="${o.PK_Optionals} "
+							th:text="${o.name}+' at '+${o.fee}+' &#36;/month'">1
+							month at 4&#36;/month</option>
+				</select>
+				</label> <input type="submit" value="Confirm">
+			</form>
+		</section>
+	</div>
+	<footer th:insert="~{/fragments/footer :: footer}">Static
+		footer</footer>
+</body>
+</html>

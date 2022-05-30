@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{/fragments/head :: headfrag}"></head>
+<body class="bootstrap-dark">
+	<header th:insert="~{/fragments/nav :: navfrag}">Static nav</header>
+	<section th:insert="~{/fragments/msg :: msgfrag}">msg</section>
+	<div align="center">
+		<section>
+			<!-- IF NO SUBSCRIPTION -->
+			<div th:unless="${session.subscription}">
+				<div>No subscription selected</div>
+			</div>
+			<!-- ELSE -->
+			<div th:if="${session.subscription}">
+				<table class="table-fit table-striped table">
+					<thead>
+						<tr>
+							<th>Products</th>
+							<th>per month</th>
+							<th>amount</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:if="${session.subscription.tblPackage}">
+							<td th:text="${session.subscription.tblPackage.name}">pkg</td>
+							<td th:text="${session.subscription.tblPeriod.fee}">amount</td>
+							<td th:text="${session.subscription.tblPeriod.fee * session.subscription.tblPeriod.months}">amount</td>
+						</tr>
+						<tr th:each="o : ${session.subscription.tblOptionals}">
+							<td th:text="${o.name}">Service</td>
+							<td th:text="${o.fee}">amount</td>
+							<td th:text="${o.fee * session.subscription.tblPeriod.months}">amount</td>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr>
+							<td>Total</td>
+							<td></td>
+							<td th:text="${session.subscription.price}">amount</td>
+						</tr>
+					</tfoot>
+				</table>
+
+				<!-- IF CUSTOMER IS ANONYMOUS -->
+				<form th:unless="${session.user}" method="GET"
+					th:action="@{/GoToSignPage}">
+					<input type="submit" value="Sign" />
+				</form>
+				<!-- ELSE -->
+				<form th:if="${session.user}" method="POST"
+					th:action="@{/ActionPlaceOrder}">
+					<input type="submit" value="Buy" />
+				</form>
+			</div>
+		</section>
+	</div>
+	<footer th:insert="~{/fragments/footer :: footer}">Static
+		footer</footer>
+</body>
+</html>

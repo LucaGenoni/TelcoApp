@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{/fragments/head :: headfrag}"></head>
+<body class="bootstrap-dark">
+	<header th:insert="~{/fragments/nav :: navfrag}">Static nav</header>
+	<section th:insert="~{/fragments/msg :: msgfrag}">msg</section>
+
+	<div align="center">
+		<section th:if="${rejected}">
+			<div>
+				<h2>Rejected orders</h2>
+				<table th:unless="${#lists.isEmpty(rejected)}"
+					class="sortable table-fit table-striped table">
+					<tr>
+						<th>Package</th>
+						<th>Price</th>
+						<th>Created</th>
+						<th>Starts</th>
+						<th>Lasts</th>
+					</tr>
+					<tr th:each="r : ${rejected}">
+						<td><a th:href="@{/GoToConfirmPage(id=${r.PK_Orders})}"
+							th:text="${r.tblPackage.name}">namepkg</a></td>
+						<td th:text="${r.price}">Company</td>
+						<td th:text="${r.creationDate}">Company</td>
+						<td th:text="${r.startDate}">Company</td>
+						<td th:text="${r.tblPeriod.months}">Company</td>
+					</tr>
+				</table>
+				<ul>
+				</ul>
+			</div>
+		</section>
+		<section>
+			<h2>Click a package to buy it</h2>
+			<div class="main-gallery js-flickity"
+				data-flickity-options='{ "cellAlign": "center", "contain": true, "pageDots": false, "groupCells": true}'
+				th:unless="${#lists.isEmpty(packages)}">
+				<div class="gallery-cell" th:each="p : ${packages}">
+					<a th:href="@{/GoToBuyPage(id=${p.PK_Packages})}" th:text="${p.name}">namepkg</a>
+					<table class="table-fit">
+						<tr th:unless="${#lists.isEmpty(p.tblServices)}">
+							<td>
+								<table class="sortable table-fit table-striped table">
+									<tr>
+										<th>Service</th>
+										<th>#sms</th>
+										<th>&#36;/sms</th>
+										<th>min</th>
+										<th>&#36;/min</th>
+										<th>#gb</th>
+										<th>&#36;/gb</th>
+									</tr>
+									<tr th:each="s : ${p.tblServices}">
+										<td th:text="${s.type}">Type</td>
+										<td th:text="${s.sms}">sms</td>
+										<td th:text="${s.feesms}">sms</td>
+										<td th:text="${s.min}">min</td>
+										<td th:text="${s.feemin}">min</td>
+										<td th:text="${s.gb}">gb</td>
+										<td th:text="${s.feegb}">gb</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr th:unless="${#lists.isEmpty(p.tblOptionals)}">
+							<td>
+								<table class="sortable table-fit table-striped table">
+									<tr>
+										<th>Optional</th>
+										<th>&#36;/month</th>
+									</tr>
+									<tr th:each="o : ${p.tblOptionals}">
+										<td th:text="${o.name}">nome</td>
+										<td th:text="${o.fee}">costo</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr th:unless="${#lists.isEmpty(p.tblPeriods)}">
+							<td>
+								<table class="sortable table-fit table-striped table">
+									<tr>
+										<th>Months</th>
+										<th>&#36;/month</th>
+									</tr>
+									<tr th:each="v : ${p.tblPeriods}">
+										<td th:text="${v.months}">nome</td>
+										<td th:text="${v.fee}">costo</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</section>
+
+	</div>
+	<footer th:insert="~{/fragments/footer :: footer}">Static
+		footer</footer>
+</body>
+</html>
