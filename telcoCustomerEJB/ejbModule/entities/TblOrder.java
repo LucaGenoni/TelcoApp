@@ -38,7 +38,7 @@ public class TblOrder implements Serializable {
 	@OneToMany(mappedBy = "tblOrder", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<TblBill> tblBills;
 
-	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@ManyToMany
 	@JoinTable(name = "tblOrderIncludesOptional", joinColumns = {
 			@JoinColumn(name = "FK_Orders", nullable = false) }, inverseJoinColumns = {
 					@JoinColumn(name = "FK_Optionals", nullable = false) })
