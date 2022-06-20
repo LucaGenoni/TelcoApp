@@ -57,21 +57,20 @@ public class ActionResultPayment extends HttpServlet {
 				result = 1;
 			if (request.getParameter("Random") != null)
 				result = (byte) ((int) (Math.random() * 2));
-			oService.createBillHere(idOrder,idUser, result);
+			oService.createBill(idOrder,idUser, result);
 			// update the user state in the session
 			request.getSession().setAttribute("user", uService.findUser(idUser));
 			if (result == 0)
 				path += "/GoToHomePage?" 
-						+ "errorMsg='Bill Rejected";
+						+ "errorMsg='Bill Rejected'";
 			else
 				path += "/GoToSchedulePage?" 
-						+ "successMsg='Bill Accepted";
+						+ "successMsg='Bill Accepted'";
 		} catch (OrderAlreadyPaidException e) {
 			path += "/GoToHomePage?" + "errorMsg='" + e.getMessage() + "'";
 		} catch (Exception e) {
-//			if any error, omit info about it
 			e.printStackTrace();
-			path = "/GoToConfirmPage?" + "errorMsg='ResultPayment Cerror'";
+			path = "/GoToHomePage?" + "errorMsg='ResultPayment Cerror'";
 		}
 
 		response.sendRedirect(path);

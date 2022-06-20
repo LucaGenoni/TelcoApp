@@ -12,7 +12,7 @@ import java.util.Date;
 @Entity
 @Table(name = "tblBills")
 @NamedQuery(name = "TblBill.findAll", query = "SELECT t FROM TblBill t")
-@NamedQuery(name = "TblBill.findAllRejectedOfRejected", query = "SELECT t FROM TblBill t WHERE t.result=0 and t.tblOrder.isValid=0")
+@NamedQuery(name = "TblBill.findAllOfRejectedOrderOfUser", query = "SELECT t FROM TblBill t WHERE t.result=0 and t.tblOrder.isValid = 0 and t.tblOrder.tblUser = ?1")
 public class TblBill implements Serializable {
 	private static final long serialVersionUID = 1L;
 

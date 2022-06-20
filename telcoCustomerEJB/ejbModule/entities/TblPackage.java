@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.*;
 
+
 /**
  * The persistent class for the tblPackages database table.
  * 

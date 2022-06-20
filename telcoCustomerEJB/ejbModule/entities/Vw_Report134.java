@@ -28,7 +28,8 @@ public class Vw_Report134 implements Serializable {
 	private double priceNoOpt;
 
 	private double priceWithOpt;
-	
+
+	//bi-directional one-to-one association to TblPackage
 	@OneToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="FK_Packages", nullable=false, insertable=false, updatable=false)
 	private TblPackage tblPackage;
