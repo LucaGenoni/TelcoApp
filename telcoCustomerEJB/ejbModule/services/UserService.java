@@ -79,11 +79,10 @@ public class UserService {
 		TblUser u =  em.find(TblUser.class, idUser);
 		return u.getTblSchedules();
 	}
+	
 	public List<TblOrder> findAllRejectedOrdersOfUser(int idUser) throws PersistenceException {
 		TblUser u = em.find(TblUser.class, idUser);
 		return em.createNamedQuery("TblOrder.findAllRejectedOfUser", TblOrder.class).setParameter(1, u).getResultList();
-//		Query q = em.createNamedQuery("TblOrder.findAllRejected", TblOrder.class);
-//		return q.getResultList();
 	}
 	
 }

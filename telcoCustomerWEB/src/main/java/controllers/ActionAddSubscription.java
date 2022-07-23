@@ -60,7 +60,6 @@ public class ActionAddSubscription extends HttpServlet {
 			
 			request.getSession().setAttribute("subscription", 
 					oService.createSubscription(date, idp, idpkg, idoptList));
-			System.out.println("ADD SUBSCRIPTION:"+oService.createSubscription(date, idp, idpkg, idoptList).toString());
 			path += "/GoToConfirmPage?successMsg='added sub'";
 			
 		}catch(Exception e) {

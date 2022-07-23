@@ -82,13 +82,6 @@ public class OrderService {
 		throw new NoSuchOrderException("No such order to buy");
 	}
 
-	public List<TblOrder> findAllRejectedOrdersOfUser(int idUser) throws PersistenceException {
-		TblUser u = em.find(TblUser.class, idUser);
-		return em.createNamedQuery("TblOrder.findAllRejectedOfUser", TblOrder.class).setParameter(1, u).getResultList();
-//		Query q = em.createNamedQuery("TblOrder.findAllRejected", TblOrder.class);
-//		return q.getResultList();
-	}
-
 
 	// create the bill and
 	public TblBill createBill(int ido, int idu, byte result)
@@ -105,20 +98,22 @@ public class OrderService {
 		TblBill b = new TblBill(datePayment, result, o);
 		o.addTblBill(b);
 		o.setIsValid(result);
-
+		
 		// business rule on bills
+		long FailedAttempts = em.createNamedQuery("TblBill.findAllOfRejectedOrderOfUser", TblOrder.class)
+				.setParameter(1, u).getResultStream()
+				.count();
 		if (result == 0) {
 			u.setIsInsolvent((byte) 1);
-			if (3 <= em.createNamedQuery("TblBill.findAllOfRejectedOrderOfUser", TblOrder.class)
-					.setParameter(1, u).getResultStream()
-					.count()) {
-				TblAlert a = new TblAlert(
-						findAllRejectedOrdersOfUser(u.getPK_Users()).stream().mapToDouble(TblOrder::getPrice).sum(), u,
-						u.getUsername(), u.getEmail(), datePayment);
+			if (FailedAttempts >= 3) {
+				double amount = em.createNamedQuery("TblOrder.findAllRejectedOfUser", TblOrder.class)
+						.setParameter(1, u).getResultList().stream()
+						.mapToDouble(TblOrder::getPrice).sum();
+				TblAlert a = new TblAlert(amount, u, u.getUsername(), u.getEmail(), datePayment);
 				u.addTblAlert(a);
 			}
 		} else {
-			if (findAllRejectedOrdersOfUser(u.getPK_Users()).stream().count() == 0)
+			if (FailedAttempts == 0)
 				u.setIsInsolvent((byte) 0);
 			TblSchedule schedule = new TblSchedule(o.getStartDate(),
 					DateUtils.addMonths(o.getStartDate(), o.getTblPeriod().getMonths()), o, u);

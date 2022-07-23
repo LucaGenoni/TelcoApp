@@ -1,54 +1,51 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:insert="~{/fragments/head :: headfrag}"></head>
-<body class="bootstrap-dark">
-	<header th:insert="~{/fragments/nav :: navfrag}">Static nav</header>
-	<section th:insert="~{/fragments/msg :: msgfrag}">msg</section>
 
-	<div align="center">
-		<section>
-			<div>
-				<h2>Activation Schedule</h2>
-				<th:block th:if="${schedules}">
-					<table th:unless="${#lists.isEmpty(schedules)}"
-						class="sortable table-fit table-striped table">
-						<tr>
-							<th>Package</th>
-							<th>Services</th>
-							<th>Optionals</th>
-							<th>Activate</th>
-							<th>Deactivate</th>
-						</tr>
-						<tr th:each="s : ${schedules}">
-							<td th:text="${s.tblOrder.tblPackage.name}"></td>
-							<td>
-								<table
-									th:unless="${#lists.isEmpty(s.tblOrder.tblPackage.tblServices)}">
-									<tr th:each="o : ${s.tblOrder.tblPackage.tblServices}">
-										<td th:text="${o.type}"></td>
-									</tr>
-								</table>
-							</td>
-							<td>
-								<table th:unless="${#lists.isEmpty(s.tblOrder.tblOptionals)}">
-									<tr th:each="o : ${s.tblOrder.tblOptionals}">
-										<td th:text="${o.name}"></td>
-									</tr>
-								</table>
-							</td>
-							<td th:text="${s.activeDate}">Company</td>
-							<td th:text="${s.deactiveDate}">Company</td>
-						</tr>
-					</table>
-				</th:block>
-				<th:div th:else="${schedules}">
-					None
-				</th:div>
-				
-			</div>
-		</section>
-	</div>
-	<footer th:insert="~{/fragments/footer :: footer}">Static
-		footer</footer>
+<head th:insert="~{/fragments/head :: headfrag}"></head>
+
+<body class="bootstrap-dark">
+    <header th:insert="~{/fragments/nav :: navfrag}">Static nav</header>
+    <section th:insert="~{/fragments/msg :: msgfrag}">msg</section>
+
+    <div align="center">
+        <section>
+            <div>
+                <h2>Activation Schedule</h2>
+                <th:block th:if="${schedules}">
+                    <table th:unless="${#lists.isEmpty(schedules)}" class="sortable table-fit table-striped table">
+                        <tr>
+                            <th>Package</th>
+                            <th>Services</th>
+                            <th>Optionals</th>
+                            <th>Activate</th>
+                            <th>Deactivate</th>
+                        </tr>
+                        <tr th:each="s : ${schedules}">
+                            <td th:text="${s.tblOrder.tblPackage.name}"></td>
+                            <td>
+                                <table th:unless="${#lists.isEmpty(s.tblOrder.tblPackage.tblServices)}">
+                                    <tr th:each="o : ${s.tblOrder.tblPackage.tblServices}">
+                                        <td th:text="${o.type}"></td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td>
+                                <table th:unless="${#lists.isEmpty(s.tblOrder.tblOptionals)}">
+                                    <tr th:each="o : ${s.tblOrder.tblOptionals}">
+                                        <td th:text="${o.name}"></td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td th:text="${s.activeDate}">Company</td>
+                            <td th:text="${s.deactiveDate}">Company</td>
+                        </tr>
+                    </table>
+                </th:block>
+            </div>
+        </section>
+    </div>
+    <footer th:insert="~{/fragments/footer :: footer}">Static footer
+    </footer>
 </body>
+
 </html>

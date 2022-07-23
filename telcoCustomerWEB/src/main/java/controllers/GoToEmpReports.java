@@ -80,12 +80,7 @@ public class GoToEmpReports extends HttpServlet {
 			List<TblOrder>  r5order = rService.findAllRejectedTblOrder();
 			List<TblAlert>  r5alert = rService.findAllTblAlert();
 			List<Vw_Report6Best>  r6 = rService.findAllVw_Report6Best();
-			System.out.println("GO TO REPORT: "+ r134);
-			System.out.println(r2);
-			System.out.println(r5user);
-			System.out.println(r5order);
-			System.out.println(r5alert);
-			System.out.println(r6);
+			
 			ctx.setVariable("report134", r134);	
 			ctx.setVariable("report2", r2);
 			ctx.setVariable("insolventUsers", r5user);
