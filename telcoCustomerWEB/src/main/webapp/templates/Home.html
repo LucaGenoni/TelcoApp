@@ -31,7 +31,7 @@
 				</ul>
 			</div>
 		</section>
-		<section>
+		<section th:if="${packages}">
 			<h2>Click a package to buy it</h2>
 			<div class="main-gallery js-flickity"
 				data-flickity-options='{ "cellAlign": "center", "contain": true, "pageDots": false, "groupCells": true}'
@@ -63,20 +63,6 @@
 								</table>
 							</td>
 						</tr>
-						<tr th:unless="${#lists.isEmpty(p.tblOptionals)}">
-							<td>
-								<table class="sortable table-fit table-striped table">
-									<tr>
-										<th>Optional</th>
-										<th>&#36;/month</th>
-									</tr>
-									<tr th:each="o : ${p.tblOptionals}">
-										<td th:text="${o.name}">nome</td>
-										<td th:text="${o.fee}">costo</td>
-									</tr>
-								</table>
-							</td>
-						</tr>
 						<tr th:unless="${#lists.isEmpty(p.tblPeriods)}">
 							<td>
 								<table class="sortable table-fit table-striped table">
@@ -87,6 +73,20 @@
 									<tr th:each="v : ${p.tblPeriods}">
 										<td th:text="${v.months}">nome</td>
 										<td th:text="${v.fee}">costo</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr th:unless="${#lists.isEmpty(p.tblOptionals)}">
+							<td>
+								<table class="sortable table-fit table-striped table">
+									<tr>
+										<th>Optional</th>
+										<th>&#36;/month</th>
+									</tr>
+									<tr th:each="o : ${p.tblOptionals}">
+										<td th:text="${o.name}">nome</td>
+										<td th:text="${o.fee}">costo</td>
 									</tr>
 								</table>
 							</td>

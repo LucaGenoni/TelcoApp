@@ -63,7 +63,7 @@ public class GoToBuyPage extends HttpServlet {
 		
 		try {
 			int idpkg = Integer.parseInt(request.getParameter("id"));
-			TblPackage  pkg = pService.findSrvpackage(idpkg);
+			TblPackage  pkg = pService.findPackage(idpkg);
 			ctx.setVariable("package", pkg);
 			ctx.setVariable("startDay", Date.from(Instant.now().truncatedTo(ChronoUnit.DAYS).plus(1, ChronoUnit.DAYS)));
 		}catch(Exception e) {

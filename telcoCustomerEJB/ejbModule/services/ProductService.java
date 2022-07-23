@@ -14,9 +14,7 @@ import entities.TblPackage;
 import entities.TblPeriod;
 import entities.TblService;
 import entities.TblUser;
-import exceptions.IntegrityOptionalException;
-import exceptions.IntegrityPackageException;
-import exceptions.RoleException;
+import exceptions.*;
 
 @Stateless
 public class ProductService {
@@ -27,7 +25,7 @@ public class ProductService {
 	}
 
 	// get one packages
-	public TblPackage findSrvpackage(int id) throws PersistenceException {
+	public TblPackage findPackage(int id) throws PersistenceException {
 		return em.find(TblPackage.class, id);
 	}
 
@@ -49,7 +47,7 @@ public class ProductService {
 	}
 
 	// create package need auth
-	public TblPackage createSrvpackage(String name, List<Integer> idservices, List<Integer> idperiods,
+	public TblPackage createPackage(String name, List<Integer> idservices, List<Integer> idperiods,
 			List<Integer> idoptionals, int idUser)
 			throws PersistenceException, RoleException, IntegrityPackageException {
 		TblUser u = em.find(TblUser.class, idUser);
@@ -95,9 +93,10 @@ public class ProductService {
 			throw e;
 		}
 	}
-	
+
 	// create optional need auth
-	public TblOptional createOptional(String name, double fee, int idUser) throws PersistenceException, RoleException,IntegrityOptionalException {
+	public TblOptional createOptional(String name, double fee, int idUser)
+			throws PersistenceException, RoleException, IntegrityOptionalException {
 		TblUser u = em.find(TblUser.class, idUser);
 		// checks
 		if (u.getRole() != 1)
@@ -117,4 +116,63 @@ public class ProductService {
 		}
 	}
 
+	// create period need auth
+	public TblPeriod createPeriod(int months, double fee, int idUser)
+			throws PersistenceException, RoleException, IntegrityOptionalException {
+		TblUser u = em.find(TblUser.class, idUser);
+		// checks
+		if (u.getRole() != 1)
+			throw new RoleException("A non employee cannot create a new period");
+		if (!em.createNamedQuery("TblPeriod.findByMonthsFee", TblUser.class).setParameter(1, months)
+				.setParameter(2, fee).getResultList().isEmpty())
+			throw new IntegrityOptionalException("Period already exists");
+
+		TblPeriod o = new TblPeriod();
+		o.setMonths(months);
+		o.setFee(fee);
+		try {
+			em.persist(o);
+			em.flush();
+			return o;
+		} catch (PersistenceException e) {
+			throw e;
+		}
+	}
+
+	// create period need auth
+	public TblService createService(String type, int sms, int min, int gb, double feeSms, double feeMin, double feeGb,
+			int idUser) throws PersistenceException, RoleException, IntegrityServiceException {
+		TblUser u = em.find(TblUser.class, idUser);
+		// checks
+		if (u.getRole() != 1)
+			throw new RoleException("A non employee cannot create a new period");
+		switch (type) {
+			case "Fixed Phone":
+				if (sms > 0 || feeSms > 0 || gb > 0 || feeGb > 0)
+					throw new IntegrityServiceException("Fixed Phone cannot have sms or gb");
+				break;
+			case "Fixed Internet":
+				if (sms > 0 || feeSms > 0 || min > 0 || feeMin > 0)
+					throw new IntegrityServiceException("Fixed Internet cannot have sms or min");
+				break;
+			case "Mobile Phone":
+				if (gb > 0 || feeGb > 0)
+					throw new IntegrityServiceException("Mobile Phone cannot have gb");
+				break;
+			case "Mobile Internet":
+				if (sms > 0 || feeSms > 0 || min > 0 || feeMin > 0)
+					throw new IntegrityServiceException("Mobile Internet cannot have sms or min");
+				break;
+			default:
+				throw new IntegrityServiceException("Type of service doesn't exist");
+		}
+		TblService o = new TblService(type, sms, min, gb, feeSms, feeMin, feeGb);
+		try {
+			em.persist(o);
+			em.flush();
+			return o;
+		} catch (PersistenceException e) {
+			throw e;
+		}
+	}
 }

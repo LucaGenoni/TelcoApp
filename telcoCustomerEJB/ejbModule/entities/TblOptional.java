@@ -11,7 +11,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "tblOptionals")
-@NamedQuery(name = "TblOptional.findAll", query = "SELECT t FROM TblOptional t")
+@NamedQuery(name = "TblOptional.findAll", query = "SELECT t FROM TblOptional t ORDER BY t.name")
 @NamedQuery(name = "TblOptional.findByName", query = "SELECT t FROM TblOptional t WHERE t.name = ?1")
 public class TblOptional implements Serializable {
 	private static final long serialVersionUID = 1L;

@@ -57,7 +57,7 @@ public class UserService {
 			throw new CredentialsException("Wrong credentals");
 		}
 		if (uList.isEmpty())
-			throw new CredentialsException("No user.");
+			throw new CredentialsException("Incorrect username or passoword.");
 		if (uList.size() == 1)
 			return uList.get(0);
 		throw new NonUniqueResultException("Multiple users with the same credentials");

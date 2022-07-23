@@ -11,7 +11,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "tblServices")
-@NamedQuery(name = "TblService.findAll", query = "SELECT t FROM TblService t")
+@NamedQuery(name = "TblService.findAll", query = "SELECT t FROM TblService t ORDER BY t.type")
 public class TblService implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -20,27 +20,35 @@ public class TblService implements Serializable {
 	@Column(unique = true, nullable = false)
 	private int PK_Services;
 
-	private double feeGb;
-
-	private double feeMin;
-
-	private double feeSms;
-
-	private int gb;
-
-	private int min;
-
-	@Column(nullable = false, length = 255)
-	private String name;
-
 	private int sms;
+	
+	private int min;	
+	
+	private int gb;
+	
+	private double feeSms;
+	
+	private double feeMin;
+	
+	private double feeGb;
 
 	@Column(nullable = false, length = 40)
 	private String type;
 
 	public TblService() {
 	}
-
+	
+	public TblService(String type, int sms, int min, int gb, double feeSms, double feeMin, double feeGb) {
+		super();
+		this.sms = sms;
+		this.min = min;
+		this.gb = gb;
+		this.feeSms = feeSms;
+		this.feeMin = feeMin;
+		this.feeGb = feeGb;
+		this.type = type;
+	}
+	
 	public int getPK_Services() {
 		return this.PK_Services;
 	}
@@ -87,14 +95,6 @@ public class TblService implements Serializable {
 
 	public void setMin(int min) {
 		this.min = min;
-	}
-
-	public String getName() {
-		return this.name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public int getSms() {

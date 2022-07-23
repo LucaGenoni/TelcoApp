@@ -40,7 +40,7 @@ public class ActionSignUp extends HttpServlet {
 			String email = StringEscapeUtils.escapeJava(request.getParameter("email"));
 			String pwd = StringEscapeUtils.escapeJava(request.getParameter("password"));
 			if (usrn == null || email == null || pwd == null || usrn.isEmpty() || email.isEmpty() || pwd.isEmpty())
-				throw new CredentialsException("SignUp failed.");
+				throw new CredentialsException("Lack informations to signup");
 			String isEmploye = StringEscapeUtils.escapeJava(request.getParameter("employee"));
 
 			if (isEmploye == null) uService.createUser(usrn, email, pwd, 0);

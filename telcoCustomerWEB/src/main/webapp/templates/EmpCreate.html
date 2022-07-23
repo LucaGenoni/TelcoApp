@@ -7,74 +7,112 @@
 	<th:block th:if="${session.user}">
 		<div th:if="${session.user.role == 1}"
 			class="container-fluid bd-cheatsheet" align="center">
-			<section>
-				<h2>Create a package</h2>
-				<form method="POST" action="ActionAddEmpPackage">
-					<div class="form-group">
-						<label>Name <input type="text" name="name" required
-							class="form-input" aria-label="example">
-						</label>
-					</div>
-					<div class="form-group">
-						<label th:unless="${#lists.isEmpty(services)}">Services <select
-							name="services" multiple required class="form-select"
-							aria-label="multiple select example">
-								<option th:each="s : ${services}" th:value="${s.PK_Services} ">
-									<th:block th:text="${s.type}"></th:block>
-									<th:block th:if="${s.sms>0}">
-										<th:block th:text="${s.sms}"></th:block> sms 
+			<div class="row">
+				<section class="flex justify-content-center col-sm">
+					<h2>Create a package</h2>
+					<form method="POST" action="ActionAddEmpPackage" autocomplete="off">
+						<div class="form-group">
+							<input type="text" name="name" placeholder="name" required
+								class="form-input" aria-label="example">
+						</div>
+						<div class="form-group">
+							<label th:unless="${#lists.isEmpty(services)}">Services <select
+								name="services" multiple required class="form-select"
+								aria-label="multiple select example">
+									<option th:each="s : ${services}" th:value="${s.PK_Services} ">
+										<th:block th:text="${s.type}"></th:block>
+										<th:block th:if="${s.sms>0}">
+											<th:block th:text="${s.sms}"></th:block> sms 
 								<th:block th:text="${s.feesms}"></th:block> &#36;/sms
 							</th:block>
-									<th:block th:if="${s.min>0}">
-										<th:block th:text="${s.min}"></th:block> min
+										<th:block th:if="${s.min>0}">
+											<th:block th:text="${s.min}"></th:block> min
 								<th:block th:text="${s.feemin}"></th:block> &#36;/min
 							</th:block>
-									<th:block th:if="${s.gb>0}">
-										<th:block th:text="${s.gb}"></th:block> gb
+										<th:block th:if="${s.gb>0}">
+											<th:block th:text="${s.gb}"></th:block> gb
 								<th:block th:text="${s.feegb}"></th:block> &#36;/gb
 							</th:block>
-								</option>
-						</select>
-						</label>
-					</div>
-					<div class="form-group">
-						<label th:unless="${#lists.isEmpty(periods)}">Period<select
-							name="periods" multiple required class="form-select"
-							aria-label="multiple select example">
-								<option th:each="p : ${periods}" th:value="${p.PK_Periods}"
-									th:text="${p.months} + ' at '+${p.fee}+' &#36;/month'">Period</option>
-						</select>
-						</label>
-					</div>
-					<div class="form-group">
-						<label th:unless="${#lists.isEmpty(optionals)}">Optionals<select
-							name="optionals" multiple class="form-select"
-							aria-label="multiple select example">
-								<option th:each="o : ${optionals}" th:value="${o.PK_Optionals} "
-									th:text="${o.name}+' at '+${o.fee}+' &#36;/month'">1
-									month at 4&#36;/month</option>
-						</select>
-						</label>
-					</div>
-					<button type="submit" value="Create" class="btn btn-primary"
-						style="">Create</button>
+									</option>
+							</select>
+							</label>
+						</div>
+						<div class="form-group">
+							<label th:unless="${#lists.isEmpty(periods)}">Period<select
+								name="periods" multiple required class="form-select"
+								aria-label="multiple select example">
+									<option th:each="p : ${periods}" th:value="${p.PK_Periods}"
+										th:text="${p.months} + ' at '+${p.fee}+' &#36;/month'">Period</option>
+							</select>
+							</label>
+						</div>
+						<div class="form-group">
+							<label th:unless="${#lists.isEmpty(optionals)}">Optionals<select
+								name="optionals" multiple class="form-select"
+								aria-label="multiple select example">
+									<option th:each="o : ${optionals}"
+										th:value="${o.PK_Optionals} "
+										th:text="${o.name}+' at '+${o.fee}+' &#36;/month'">1
+										month at 4&#36;/month</option>
+							</select>
+							</label>
+						</div>
+						<button type="submit" value="Create" class="btn btn-primary">Create package</button>
 
-				</form>
-			</section>
-			<section>
-				<h2>Create an optional</h2>
-				<form method="POST" action="ActionAddEmpOptional">
-					<div class="form-group">
-						<label>Name: <input type="text" name="name" required></label>
-					</div>
-					<div class="form-group">
-						<label>Fee: <input type="text" name="fee" required></label>
+					</form>
+				</section>
+				<section class="flex justify-content-center col-sm">
+					<h2>Create a service</h2>
+					<form method="POST" action="ActionAddEmpService" autocomplete="off">
+						<div class="form-group">
+							<select name="type" required>
+							  <option value="" disabled selected hidden>Select type</option>
+							  <option value="Fixed Phone">Fixed Phone</option>
+							  <option value="Fixed Internet">Fixed Internet</option>
+							  <option value="Mobile Phone">Mobile Phone</option>
+							  <option value="Mobile Internet">Mobile Internet</option>
+							</select>
+						</div>
+						<div class="form-group row justify-content-center">
+							<input class="col-sm-2" type="text" name="sms" placeholder="sms"  >
+							<input class="col-sm-2" type="text" name="feeSms" placeholder="feeSms" >
+						</div>
+						<div class="form-group row justify-content-center">
+							<input class="col-sm-2" type="text" name="min" placeholder="min" >
+							<input class="col-sm-2" type="text" name="feeMin" placeholder="feeMin" >
+						</div>
+						<div class="form-group row justify-content-center">
+							<input class="col-sm-2" type="text" name="gb" placeholder="gb" >
+							<input class="col-sm-2" type="text" name="feeGb" placeholder="feeGb" >
+						</div>
+						<button type="submit" value="Create" class="btn btn-primary">Create service</button>
+					</form>
 
-					</div>
-					<button type="submit" value="Create" class="btn btn-primary"
-						style="">Create</button>
-				</form>
-			</section>
+					<h2>Create a period</h2>
+					<form method="POST" action="ActionAddEmpPeriod"
+						autocomplete="off">
+						<div class="form-group">
+							<input type="text" name="months" placeholder="months" required>
+						</div>
+						<div class="form-group">
+							<input type="text" name="fee" placeholder="fee per month" required>
+
+						</div>
+						<button type="submit" value="Create" class="btn btn-primary">Create period</button>
+					</form>
+					<h2>Create an optional</h2>
+					<form method="POST" action="ActionAddEmpOptional"
+						autocomplete="off">
+						<div class="form-group">
+							<input type="text" name="name" placeholder="name" required>
+						</div>
+						<div class="form-group">
+							<input type="text" name="fee" placeholder="fee" required>
+						</div>
+						<button type="submit" value="Create" class="btn btn-primary">Create optional</button>
+					</form>
+				</section>
+			</div>
 		</div>
 
 	</th:block>

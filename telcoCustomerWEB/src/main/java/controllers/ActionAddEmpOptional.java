@@ -33,7 +33,6 @@ public class ActionAddEmpOptional extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
-//		o = oService.findToBillOfUser(u.getId(),o.getId());
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

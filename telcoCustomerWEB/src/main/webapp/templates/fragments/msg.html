@@ -8,8 +8,7 @@
 			<div class="alert alert-warning alert-dismissible fade show"
 				role="alert" th:if="${session.user.isInsolvent}">
 				<i class="fa-solid fa-loader"></i>
-				<span>You are flagged as an insolvent user</span>
-				<span th:text="${session.user.isInsolvent}"></span>
+				<span>You are flagged as an insolvent user!</span>
 				<button type="button" class="btn-close" data-bs-dismiss="alert"
 					aria-label="Close"></button>
 			</div>

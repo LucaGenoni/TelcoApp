@@ -11,7 +11,8 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "tblPeriods")
-@NamedQuery(name = "TblPeriod.findAll", query = "SELECT t FROM TblPeriod t")
+@NamedQuery(name = "TblPeriod.findAll", query = "SELECT t FROM TblPeriod t ORDER BY t.months")
+@NamedQuery(name = "TblPeriod.findByMonthsFee", query = "SELECT t FROM TblPeriod t WHERE t.months = ?1 AND t.fee = ?2")
 public class TblPeriod implements Serializable {
 	private static final long serialVersionUID = 1L;
 
