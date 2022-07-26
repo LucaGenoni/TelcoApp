@@ -60,7 +60,7 @@ public class TblOrder implements Serializable {
 					@JoinColumn(name = "FK_Optionals", nullable = false) })
 	private List<TblOptional> tblOptionals;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "FK_Packages", nullable = false)
 	private TblPackage tblPackage;
 
